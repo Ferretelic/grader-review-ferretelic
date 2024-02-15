@@ -6,7 +6,7 @@ rm -rf grading-area
 mkdir grading-area
 
 echo "Start grading [$1]"
-git clone $1 student-submission &> cloning-results.txt
+git clone $1 student-submission &> ./grading-area/cloning-results.txt
 
 if [[ $? -ne 0 ]]
 then
@@ -50,6 +50,9 @@ then
   tests=$(echo $lastline | cut -d "(" -f2 | cut -d " " -f1)
   suucess=$tests
 else
+  echo ""
+  cat running-results.txt | grep -B1 -r -h "java.lang.AssertionError"
+  echo ""
   tests=$(echo $lastline | cut -d ":" -f2 | cut -d "," -f1)
   failures=$(echo $lastline | cut -d ":" -f3)
   success=$(($tests - $failures))
