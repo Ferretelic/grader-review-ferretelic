@@ -34,6 +34,7 @@ javac -cp $CPATH *.java &> compiling-results.txt
 
 if [[ $? -ne 0 ]]
 then
+  cat compiling-results.txt
   echo "Code failed to Compile."
   exit 1
 else
@@ -51,7 +52,7 @@ then
   suucess=$tests
 else
   echo ""
-  cat running-results.txt | grep -B1 -r -h "java.lang.AssertionError"
+  cat running-results.txt
   echo ""
   tests=$(echo $lastline | cut -d ":" -f2 | cut -d "," -f1)
   failures=$(echo $lastline | cut -d ":" -f3)
